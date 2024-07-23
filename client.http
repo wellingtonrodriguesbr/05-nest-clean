@@ -30,7 +30,6 @@ Content-Type: application/json
 Authorization: Bearer {{authToken}}
 
 {
-  "name": "Wellington Rodrigues",
-  "email": "ton@email.com",
-  "password": "12345678"
+  "title": "Nova pergunta criada",
+  "content": "Um conteúdo de teste nessa pergunta"
 }
