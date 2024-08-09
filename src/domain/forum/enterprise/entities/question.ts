@@ -9,13 +9,13 @@ import dayjs from "dayjs";
 
 export interface QuestionProps {
   authorId: UniqueEntityId;
-  bestAnswerId?: UniqueEntityId;
+  bestAnswerId?: UniqueEntityId | null;
   title: string;
   slug: Slug;
   content: string;
   attachments: QuestionAttachmentList;
   createdAt: Date;
-  updatedAt?: Date;
+  updatedAt?: Date | null;
 }
 export class Question extends AggregateRoot<QuestionProps> {
   get authorId() {
@@ -54,13 +54,14 @@ export class Question extends AggregateRoot<QuestionProps> {
     return (this.props.updatedAt = new Date());
   }
 
-  set bestAnswerId(bestAnswerId: UniqueEntityId | undefined) {
-    if (bestAnswerId === undefined) {
+  set bestAnswerId(bestAnswerId: UniqueEntityId | undefined | null) {
+    if (bestAnswerId === undefined || bestAnswerId === null) {
       return;
     }
 
     if (
       this.props.bestAnswerId === undefined ||
+      this.props.bestAnswerId === null ||
       !this.props.bestAnswerId.equals(bestAnswerId)
     ) {
       this.addDomainEvent(
