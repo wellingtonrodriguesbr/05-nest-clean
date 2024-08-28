@@ -1,4 +1,10 @@
-import { Controller, Post, UseGuards, Body } from "@nestjs/common";
+import {
+  Controller,
+  Post,
+  UseGuards,
+  Body,
+  BadRequestException,
+} from "@nestjs/common";
 import { ZodValidationPipe } from "@/infra/http/pipes/zod-validation-pipe";
 import { JwtAuthGuard } from "@/infra/auth/jwt-auth.guard";
 import { CurrentUser } from "@/infra/auth/current-user-decorator";
@@ -29,11 +35,15 @@ export class CreateQuestionController {
 
     const authorId = user.sub;
 
-    await this.createQuestion.execute({
+    const result = await this.createQuestion.execute({
       title,
       content,
       authorId,
       attachmentsIds: [],
     });
+
+    if (result.isLeft()) {
+      throw new BadRequestException();
+    }
   }
 }
