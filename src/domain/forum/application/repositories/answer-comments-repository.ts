@@ -8,5 +8,5 @@ export interface AnswerCommentsRepository {
     params: PaginationParams
   ): Promise<AnswerComment[]>;
   create(answerComment: AnswerComment): Promise<void>;
-  delete(questionComment: AnswerComment): Promise<void>;
+  delete(answerComment: AnswerComment): Promise<void>;
 }
