@@ -30,24 +30,21 @@ export class PrismaAnswersRepository implements AnswersRepository {
   async findById(answerId: string) {
     const answer = await this.prismaService.answer.findUnique({
       where: {
-        id: answerId
-      }
+        id: answerId,
+      },
     });
 
-    if(!answer) {
+    if (!answer) {
       return null;
     }
 
     return PrismaAnswerMapper.toDomain(answer);
   }
 
-  async findManyByQuestionId(
-    questionId: string,
-    params: PaginationParams
-  ) {
+  async findManyByQuestionId(questionId: string, params: PaginationParams) {
     const answersByQuestion = await this.prismaService.answer.findMany({
       where: {
-        questionId
+        questionId,
       },
       orderBy: {
         createdAt: "desc",
@@ -61,11 +58,10 @@ export class PrismaAnswersRepository implements AnswersRepository {
 
   async delete(answer: Answer) {
     const raw = PrismaAnswerMapper.toPrisma(answer);
-    await this.prismaService.question.delete({
+    await this.prismaService.answer.delete({
       where: {
         id: raw.id,
       },
     });
-  
   }
 }
