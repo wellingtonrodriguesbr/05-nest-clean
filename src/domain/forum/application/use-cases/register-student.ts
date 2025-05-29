@@ -22,7 +22,7 @@ type RegisterStudentUseCaseResponse = Either<
 export class RegisterStudentUseCase {
   constructor(
     private studentsRepository: StudentsRepository,
-    private hasGenerator: HashGenerator
+    private hashGenerator: HashGenerator
   ) {}
 
   async execute({
@@ -36,7 +36,7 @@ export class RegisterStudentUseCase {
       return left(new StudentAlreadyExistsError(email));
     }
 
-    const passwordHash = await this.hasGenerator.hash(password);
+    const passwordHash = await this.hashGenerator.hash(password);
     const student = Student.create({
       name,
       email,
