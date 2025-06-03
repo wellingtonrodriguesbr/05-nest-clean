@@ -17,7 +17,7 @@ export class R2Storage implements Uploader {
       region: "auto",
       credentials: {
         accessKeyId: envService.get("AWS_ACCESS_KEY_ID"),
-        secretAccessKey: envService.get("AWS_SECRET_ACCESS_KEY"),
+        secretAccessKey: envService.get("AWS_SECRET_ACCESS_KEY_ID"),
       },
     });
   }
