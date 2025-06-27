@@ -8,6 +8,7 @@ import { CreateQuestionUseCase } from "@/domain/forum/application/use-cases/crea
 const createQuestionBodySchema = z.object({
   title: z.string(),
   content: z.string(),
+  attachments: z.array(z.string().uuid()),
 });
 
 type CreateQuestionBodySchema = z.infer<typeof createQuestionBodySchema>;
@@ -23,7 +24,8 @@ export class CreateQuestionController {
     @Body(bodyValidationPipe) body: CreateQuestionBodySchema,
     @CurrentUser() user: UserPayload
   ) {
-    const { title, content } = createQuestionBodySchema.parse(body);
+    const { title, content, attachments } =
+      createQuestionBodySchema.parse(body);
 
     const authorId = user.sub;
 
@@ -31,7 +33,7 @@ export class CreateQuestionController {
       title,
       content,
       authorId,
-      attachmentsIds: [],
+      attachmentsIds: attachments,
     });
 
     if (result.isLeft()) {
