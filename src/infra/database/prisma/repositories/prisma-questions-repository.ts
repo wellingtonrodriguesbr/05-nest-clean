@@ -19,6 +19,7 @@ export class PrismaQuestionsRepository implements QuestionsRepository {
 
   async save(question: Question) {
     const raw = PrismaQuestionMapper.toPrisma(question);
+
     await this.prismaService.question.update({
       where: {
         id: raw.id,
